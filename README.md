@@ -6,6 +6,7 @@ Users' suggestions will be used to calculate risk scores and will be visible to 
 Scores will be computed in a given interval (e.g., once every 2 weeks).
 
 :warning: This is a prototype and some bugs may be present. This is a long-term annotation project for future attempts of automatic recognition of unsafe channels thorugh user/channel activties.
+
 :warning: This is extension is meant ONLY FOR PC (implemented from medium/large screens).
 
 ## How to use it
