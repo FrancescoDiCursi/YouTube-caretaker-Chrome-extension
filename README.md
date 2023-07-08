@@ -1,4 +1,4 @@
-# YouTube-caretaker-Chrome-extension (PC ONLYU)
+# YouTube-caretaker-Chrome-extension (PC ONLY)
 A Chrome extension that allows the user to attend a collective annotation project, see risk scores and block undesired channels.
 
 Users' suggestions will be used to calculate risk scores and will be visible to all users.
