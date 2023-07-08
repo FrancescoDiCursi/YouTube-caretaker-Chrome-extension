@@ -111,12 +111,15 @@ document.addEventListener('DOMContentLoaded', function(){
     },false)
 
     
-
+    
     //login if user in storage (if user close the popup without logout, the user is still logged in but the popup needs to reload the loggin)
     chrome.storage.local.get().then(function(response){
-        if (response["user"]!==null){
-            log_btn.click()
-            console.log("LOG AUTO CLICK")
+        if (response["user"]!==undefined){
+           if (response["user"]!==null){
+             log_btn.click()
+             console.log("LOG AUTO CLICK")
+           }
+           
         }
     })
 

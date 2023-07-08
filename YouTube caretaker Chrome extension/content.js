@@ -49,378 +49,382 @@ setTimeout(()=>{
         
             console.log("BLACK: ", black_list)
             console.log("CHANNEL NAME", document.querySelectorAll("ytd-reel-video-renderer")) //[1].querySelector("#channel-info > a").getAttribute("href"))
-            if(logged_user!==null){
-                try{
-                    const callback= (mutationList, observer)=>{
-                        console.log("mutation", mutationList)
-                        let story_renderer=document.querySelectorAll("[is-active]")[1]
-                        let story_channel_name= story_renderer.querySelector("#channel-info > a").getAttribute("href").replace("/","")
-                        console.log(story_channel_name)
-                        if (black_list.includes(story_channel_name)){
+            console.log("LOGGED USER", logged_user)
+            if(logged_user!==undefined){
+                if(logged_user!==null){
+                    try{
+                        const callback= (mutationList, observer)=>{
+                            console.log("mutation", mutationList)
+                            let story_renderer=document.querySelectorAll("[is-active]")[1]
+                            let story_channel_name= story_renderer.querySelector("#channel-info > a").getAttribute("href").replace("/","")
                             console.log(story_channel_name)
-                            current_story_id=document.querySelectorAll("[is-active]")[1].getAttribute("id")
-                            setTimeout(()=>{
-                                try{
-                                    console.log("remove short")
-                                    let target_story=document.querySelector(`ytd-reel-video-renderer[id="${current_story_id}"]`)
-                                    target_story.remove()
-                                }catch{
-                                    console.log("no short")
-                                }
-                                
-    
-                            },2000)                        
-                        } else{
-                            //check for opened shorts' comment section
-                            //(if it is open and one changes the shorts and then come back to this, the comment section is bugged. so close and reopen it)
-                            //// sometimes in triggers the shorts page counter in background.js
-                            //// remove this else condition if the problem persists
-                            setTimeout(()=>{
-                               if(document.querySelector(`[is-active][is-watch-while-mode]`)!==null ){
-                                console.log(" SHORTS COMMENT: ",  document.querySelector("div#actions > div#comments-button > ytd-button-renderer > yt-button-shape > label > button"))
-                                let story_renderer=document.querySelectorAll("[is-active]")[1]
-                                story_renderer.querySelector("div#actions > div#comments-button > ytd-button-renderer > yt-button-shape > label > button").click()
-                               }
-                            },500)
-                        }
-                        
-                }
-                const stories_observer=new MutationObserver(callback)
-                const stories_progress_bar=   document.querySelector("yt-page-navigation-progress")//document.getElementsByTagName("ytd-shorts")[0]
-                const observer_config = { attributes: true};
-                stories_observer.observe(stories_progress_bar, observer_config)
-    
-                }catch{
-                    console.log("no stories page")
-                }
-               
-                /*
-                if (window.location.href.includes("/shorts/")){
-    
-                    setTimeout(()=>{
-                        console.log("CHANNEL NAME", document.querySelectorAll("ytd-reel-video-renderer")) //[1].querySelector("#channel-info > a").getAttribute("href"))
-                        let story_channel_names= document.querySelectorAll("[is-active]")[1].querySelector("#channel-info > a").getAttribute("href")
-                        document.body.innerHTML= "Shorts are blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
-                        document.body.style.fontSize="50px"
-                        //document.body.style.marginLeft="25%"
-                        document.body.style.marginTop="20%"
-                        document.body.style.textAlign="center"
-                        //document.getElementsByTagName("html")[0].
-                       
-                    },3000)
-    
-                }
-                */
-                var default_bg_color= "rgba(226, 223, 210,0.5)"
-    
-    
-                
-    
-                addEventListener("scroll", (event)=>{
-    
-                    if(window.location.href.includes("/shorts/")){
-                        
+                            if (black_list.includes(story_channel_name)){
+                                console.log(story_channel_name)
+                                current_story_id=document.querySelectorAll("[is-active]")[1].getAttribute("id")
+                                setTimeout(()=>{
+                                    try{
+                                        console.log("remove short")
+                                        let target_story=document.querySelector(`ytd-reel-video-renderer[id="${current_story_id}"]`)
+                                        target_story.remove()
+                                    }catch{
+                                        console.log("no short")
+                                    }
+                                    
+        
+                                },2000)                        
+                            } else{
+                                //check for opened shorts' comment section
+                                //(if it is open and one changes the shorts and then come back to this, the comment section is bugged. so close and reopen it)
+                                //// sometimes in triggers the shorts page counter in background.js
+                                //// remove this else condition if the problem persists
+                                setTimeout(()=>{
+                                   if(document.querySelector(`[is-active][is-watch-while-mode]`)!==null ){
+                                    console.log(" SHORTS COMMENT: ",  document.querySelector("div#actions > div#comments-button > ytd-button-renderer > yt-button-shape > label > button"))
+                                    let story_renderer=document.querySelectorAll("[is-active]")[1]
+                                    story_renderer.querySelector("div#actions > div#comments-button > ytd-button-renderer > yt-button-shape > label > button").click()
+                                   }
+                                },500)
+                            }
+                            
                     }
-                    //disable video page if in blacklist
-                    if (window.location.href.includes("/watch?v=") && suggestion_hidden===false){
+                    const stories_observer=new MutationObserver(callback)
+                    const stories_progress_bar=   document.querySelector("yt-page-navigation-progress")//document.getElementsByTagName("ytd-shorts")[0]
+                    const observer_config = { attributes: true};
+                    stories_observer.observe(stories_progress_bar, observer_config)
+        
+                    }catch{
+                        console.log("no stories page")
+                    }
+                   
+                    /*
+                    if (window.location.href.includes("/shorts/")){
+        
                         setTimeout(()=>{
-                            //check if it is a video of an unsafe channel. If so, obscure it.
-                            let video_auth_ch_address="@"+document.getElementById("text-container")
-                            .getElementsByTagName("a")[0].getAttribute("href").split("@")[1]
-                            console.log("VIDEO ADDRS",video_auth_ch_address)
-                            if (black_list.includes(video_auth_ch_address)){
-                            document.body.innerHTML= "Videos by "+ video_auth_ch_address + " are blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
+                            console.log("CHANNEL NAME", document.querySelectorAll("ytd-reel-video-renderer")) //[1].querySelector("#channel-info > a").getAttribute("href"))
+                            let story_channel_names= document.querySelectorAll("[is-active]")[1].querySelector("#channel-info > a").getAttribute("href")
+                            document.body.innerHTML= "Shorts are blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
                             document.body.style.fontSize="50px"
                             //document.body.style.marginLeft="25%"
                             document.body.style.marginTop="20%"
                             document.body.style.textAlign="center"
-                            //document.getElementsByTagName("html")[0].appendChild(new_body)
-                            }
-    
-                            //disable suggestions
-                            if(hide_video_suggestion===true){
-                                document.getElementById("secondary").remove()
-                                let video_btns=document.getElementsByClassName("ytp-chrome-bottom")[0].getElementsByTagName("a")
-                                //skip to next and previous video
-                                for (let i=0;i<video_btns.length;i++){
-                                video_btns.item(i).style.display="none" //remove not working in this for loop
-                                }
-    
-                                //autoplay toggle
-                                //document.getElementsByClassName("ytp-chrome-bottom")[0].getElementsByTagName("div")[46].remove()
-                                document.getElementsByClassName("ytp-autonav-toggle-button-container")[0].remove()
-                                //final screen
-                                document.getElementsByClassName("html5-endscreen")[0].remove()
-                                suggestion_hidden=true
-                            }
-                            
-                        },1000)
-                        
+                            //document.getElementsByTagName("html")[0].
+                           
+                        },3000)
+        
                     }
-                    //disable channel page if in blacklist
-                    //chanel page have no special substring, use channel header instead
-                    //console.log("IS CHANNEL PAGE, ", document.querySelectorAll("ytd-formatted-string#channel-header"))
-                    if(Array(document.querySelectorAll("div#channel-container")).length>0){
-                        try{
-                            let channel_address_=document.querySelector("yt-formatted-string#channel-handle").innerHTML
-                            console.log("CHANNEL PAGE, ", channel_address_)
-                            if (black_list.includes(channel_address_)){
-                                document.body.innerHTML= "Channel of "+ channel_address_ + " is blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
+                    */
+                    var default_bg_color= "rgba(226, 223, 210,0.5)"
+        
+        
+                    
+        
+                    addEventListener("scroll", (event)=>{
+        
+                        if(window.location.href.includes("/shorts/")){
+                            
+                        }
+                        //disable video page if in blacklist
+                        if (window.location.href.includes("/watch?v=") && suggestion_hidden===false){
+                            setTimeout(()=>{
+                                //check if it is a video of an unsafe channel. If so, obscure it.
+                                let video_auth_ch_address="@"+document.getElementById("text-container")
+                                .getElementsByTagName("a")[0].getAttribute("href").split("@")[1]
+                                console.log("VIDEO ADDRS",video_auth_ch_address)
+                                if (black_list.includes(video_auth_ch_address)){
+                                document.body.innerHTML= "Videos by "+ video_auth_ch_address + " are blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
                                 document.body.style.fontSize="50px"
                                 //document.body.style.marginLeft="25%"
                                 document.body.style.marginTop="20%"
                                 document.body.style.textAlign="center"
-                            }
-                        }catch{
-    
-                        }
-                       
-                    }
-                    console.log(window.location.href)
-                    var curr_url=window.location.href
-                    if (curr_url!==old_url){
-                        n_old_els=0
-                        ch_addresses=[]
-                        old_url=curr_url
-                    }
-                    let new_els=get_thumbs(curr_url)
-                    
-                    console.log("address list: ",ch_addresses)
-                    console.log("thumbs: ", new_els.length)
-    
-                    if (new_els.length>=n_old_els){  
-                    for(let i=0; i<new_els.length; i++){
-                        let el= new_els.item(i)
-                        el.style.minHeight="15vh"
-                        if (i>=n_old_els){ //                    
-                            icons_cont=document.createElement("div")
-                            console.log(window.location.href)
-                            let div_dismiss= el.querySelector("div#dismissible")
-                            let div_video_text= el.querySelector("div.text-wrapper.style-scope.ytd-video-renderer")
-                            try{
-                                let thumbnail= el.querySelector("ytd-thumbnail")
-                                thumbnail.style.position="relative"
-                                if(window.location.href.includes("https://www.youtube.com/results?search_query=")){
-                                    thumbnail.style.marginLeft="33%"
-                                    thumbnail.style.marginTop="5%"
-    
-                                }else if(window.location.href==="https://www.youtube.com/"){
-                                    thumbnail.style.marginTop="15%"
+                                //document.getElementsByTagName("html")[0].appendChild(new_body)
                                 }
-    
-                            }
-                            catch{
-    
-                            }
-                            if (window.location.href==="https://www.youtube.com/"){
-                                //create icons cont for thumb
-                                icons_cont.className="customized_icon_cont"
-                                icons_cont.style.position="absolute"
-                                icons_cont.style.top="0%"
-                                icons_cont.style.paddingTop="10%"
-                                icons_cont.style.marginLeft="-1.5vw"
-                                icons_cont.style.width="90%"
-                                //move video img down
-                                div_dismiss.style.marginTop="20%"
-                                div_dismiss.style.maxWidth="100%"
-                            } else if(window.location.href.includes("/results?search_query=")){
-                                icons_cont.className="customized_icon_cont"
-                                icons_cont.style.position="absolute"
-                                icons_cont.style.top="0%"
-                                icons_cont.style.paddingTop="5vh"
-                                icons_cont.style.marginLeft="0%"
-                                icons_cont.style.width="95%"
-                                icons_cont.style.marginBottom="5%"
-                                //move video img down
-                                div_dismiss.style.marginTop="12vh"
-                                //div_dismiss.style.marginLeft="-20vw"
-    
-                                div_video_text.style.marginTop="3vh"
-                                div_video_text.style.backgroundColor="rgba(226, 223, 210,0.2)" //
-                                div_video_text.style.border="1px solid black"
-                                div_video_text.style.padding="3%"
-    
-    
-                            }
-    
-                            //add rem btn
-                            btn_remove= document.createElement("button")
-                            btn_remove.className="btn_remove"
-                            btn_remove.style.width="50%"
-                            btn_remove.style.height="3vh" 
-                            btn_remove.style.fontSize="115%"
-                            btn_remove.style.border="black 1px solid"
-                            //add safe btn
-                            btn_safe= document.createElement("button")
-                            btn_safe.className="btn_safe"
-                            btn_safe.style.width="50%"
-                            btn_safe.style.height="3vh" 
-                            btn_safe.style.fontSize="115%"
-                            btn_safe.style.border="black 1px solid"
-    
-    
-                            //use channel url to get correlated channels
-                            
-                            
-    
-    
-                            //mark deviants
-                            try {
-                                let ch_address= get_channel(curr_url, el) //err (whitelist is undefined)
-                                //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
-                                let ch_url=''
-                                console.log("CHANNEL URL", ch_url)
-                                //btn_remove.innerHTML = "Block"
-                                //btn_remove.onclick=function(){add_to_blacklist(ch_address, show_unsafe)}
-    
-                                
-                                //handle blacklist btn
-                                if (black_list.includes(ch_address)){ // && !white_list.includes(ch_address)
-                                    console.log(ch_address)
-                                    
-                                    //modifgy element according to input value in popup
-                                    //if visible: alter color and place icons (icons only after merging user database to main database and subsequent computation)
-                                    //elif not visible: hide elements
-                                    handle_thumb_style(el, ch_address, btn_remove, btn_safe, "add to black", password, ch_url)
-                                    //if(show_unsafe==="Show unsafe videos"){ //if it's written "Show", then it is in the hide state
-                                        //el.remove()
-                                    //}
-                                } else if (!black_list.includes(ch_address)){
-                                    handle_thumb_style(el, ch_address,btn_remove, btn_safe, "remove from black", password, ch_url)
-                                }
-    
-                                                         
-                            } catch (error) {
-                                console.log("ERROR in thumbnails handling (blacklist): ", error)
-                            }
-    
-                         
-                    
-                            //mark safe
-                            try {
-                                let ch_address= get_channel(curr_url, el) 
-                                //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
-                                let ch_url=""
-                                console.log("Start marking safe")
-                                //handle safelist btn
-                                if (white_list.includes(ch_address) ){ //&& !black_list.includes(ch_address)  
-                                    console.log("Is in whitelist")
-                                    handle_thumb_style(el, ch_address, btn_remove, btn_safe,"add to white", password, ch_url)
-                                }else if (!white_list.includes(ch_address)){
-                                    console.log("Is not in whitelist")
-    
-                                    handle_thumb_style(el, ch_address, btn_remove, btn_safe, "remove from white", password, ch_url)
-                                } 
-                            } catch (error){
-                                console.log("ERROR in thumbnails handling (whitelist): ", error)
-                            }
-    
-                            //APPENDS
-                            //append to cont
-                            icons_cont.appendChild(btn_remove)
-                            icons_cont.appendChild(btn_safe)
-                            
-            
-                            //append cont to thumb (avoid multiple cont) (only to thumb)
-                            if(el.getElementsByClassName("customized_icon_cont").length===0 && btn_remove.innerHTML!=""){
-                                //el.insertBefore(icons_cont, el.firstChild)
-                                el.appendChild(icons_cont)
-                                //move channel label to the top
-                                try{
-                                    el.querySelector(".channel_label").style.position="absolute"
-                                    el.querySelector(".channel_label").style.top=0
-                                }catch{
-    
-                                }
-                                //handle el color
-                                if(btn_safe.disabled===true){
-                                    el.style.backgroundColor="rgba(255,0,0,0.5)"
-                                }else if(btn_remove.disabled===true){
-                                    el.style.backgroundColor="rgba(0,255,0,0.5)"
-                                }else if(btn_remove.disabled===false && btn_safe.disabled===false){
-                                    el.style.backgroundColor="rgba(255,255,255,0)"
-                                }
-                                
-                            }
-    
-                            try{
-                                //handle external scores
-                                let ch_address= get_channel(curr_url, el)
-                                //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
-                                let ch_url=""
-    
-                                console.log(ch_address, Object.keys(all_scores))
-                                if(Object.keys(all_scores).includes(ch_address)){
-                                    try{
-                                        let thumbnail=el.querySelector("ytd-thumbnail")
-                                        if(window.location.href==="https://www.youtube.com/"){
-                                            thumbnail.style.marginTop="25%"
-                                        }else if(window.location.href.includes("https://www.youtube.com/results?search_query=")){
-                                            thumbnail.style.marginTop="15%"
-    
-                                        }
-                                    }catch{
-                                        
+        
+                                //disable suggestions
+                                if(hide_video_suggestion===true){
+                                    document.getElementById("secondary").remove()
+                                    let video_btns=document.getElementsByClassName("ytp-chrome-bottom")[0].getElementsByTagName("a")
+                                    //skip to next and previous video
+                                    for (let i=0;i<video_btns.length;i++){
+                                    video_btns.item(i).style.display="none" //remove not working in this for loop
                                     }
-                                   //create and append table
-                                   tableCreate(icons_cont, all_scores[ch_address])
+        
+                                    //autoplay toggle
+                                    //document.getElementsByClassName("ytp-chrome-bottom")[0].getElementsByTagName("div")[46].remove()
+                                    document.getElementsByClassName("ytp-autonav-toggle-button-container")[0].remove()
+                                    //final screen
+                                    document.getElementsByClassName("html5-endscreen")[0].remove()
+                                    suggestion_hidden=true
                                 }
-                            }catch (error){
-                                console.log("ERROR in thumbnails handling (scores): ", error)
+                                
+                            },1000)
+                            
+                        }
+                        //disable channel page if in blacklist
+                        //chanel page have no special substring, use channel header instead
+                        //console.log("IS CHANNEL PAGE, ", document.querySelectorAll("ytd-formatted-string#channel-header"))
+                        if(Array(document.querySelectorAll("div#channel-container")).length>0){
+                            try{
+                                let channel_address_=document.querySelector("yt-formatted-string#channel-handle").innerHTML
+                                console.log("CHANNEL PAGE, ", channel_address_)
+                                if (black_list.includes(channel_address_)){
+                                    document.body.innerHTML= "Channel of "+ channel_address_ + " is blocked.<br> <a href='https://www.youtube.com'> Go back to the home. </a>"
+                                    document.body.style.fontSize="50px"
+                                    //document.body.style.marginLeft="25%"
+                                    document.body.style.marginTop="20%"
+                                    document.body.style.textAlign="center"
+                                }
+                            }catch{
+        
                             }
                            
-    
-                            //handle radar score
-                            if (btn_remove.innerHTML!==""){ //if on a video
-                                let radar_toggle=document.createElement("button")
-                                radar_toggle.innerHTML="Show other scores"
-                                radar_toggle.style.backgroundColor=" rgba(255,255,255,1)"
-                                radar_toggle.style.opacity=1
-                                radar_toggle.style.width="100%"
-                                radar_toggle.style.marginTop="1vh"
-                                radar_toggle.className="radar_btn"
-                                radar_toggle.style.border="1px solid black"
-                                radar_toggle.style.fontSize="115%"
-                                radar_toggle.style.height="3vh"
-                                let ch_address= get_channel(curr_url, el) 
-                                //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
-                                let ch_url=""
-                                console.log("CH ADDRES RADAR", ch_address, all_scores[ch_address])
-                                radar_toggle.onclick=function(){handle_radar(el, radar_toggle,
-                                                                             all_scores[ch_address], ch_address)}
-                                if(el.getElementsByClassName("radar_btn").length===0){
-                                    icons_cont.appendChild(radar_toggle)
+                        }
+                        console.log(window.location.href)
+                        var curr_url=window.location.href
+                        if (curr_url!==old_url){
+                            n_old_els=0
+                            ch_addresses=[]
+                            old_url=curr_url
+                        }
+                        let new_els=get_thumbs(curr_url)
+                        
+                        console.log("address list: ",ch_addresses)
+                        console.log("thumbs: ", new_els.length)
+        
+                        if (new_els.length>=n_old_els){  
+                        for(let i=0; i<new_els.length; i++){
+                            let el= new_els.item(i)
+                            el.style.minHeight="15vh"
+                            if (i>=n_old_els){ //                    
+                                icons_cont=document.createElement("div")
+                                console.log(window.location.href)
+                                let div_dismiss= el.querySelector("div#dismissible")
+                                let div_video_text= el.querySelector("div.text-wrapper.style-scope.ytd-video-renderer")
+                                try{
+                                    let thumbnail= el.querySelector("ytd-thumbnail")
+                                    thumbnail.style.position="relative"
+                                    if(window.location.href.includes("https://www.youtube.com/results?search_query=")){
+                                        thumbnail.style.marginLeft="33%"
+                                        thumbnail.style.marginTop="5%"
+        
+                                    }else if(window.location.href==="https://www.youtube.com/"){
+                                        thumbnail.style.marginTop="15%"
+                                    }
+        
+                                }
+                                catch{
+        
+                                }
+                                if (window.location.href==="https://www.youtube.com/"){
+                                    //create icons cont for thumb
+                                    icons_cont.className="customized_icon_cont"
+                                    icons_cont.style.position="absolute"
+                                    icons_cont.style.top="0%"
+                                    icons_cont.style.paddingTop="10%"
+                                    icons_cont.style.marginLeft="-1.5vw"
+                                    icons_cont.style.width="90%"
+                                    //move video img down
+                                    div_dismiss.style.marginTop="20%"
+                                    div_dismiss.style.maxWidth="100%"
+                                } else if(window.location.href.includes("/results?search_query=")){
+                                    icons_cont.className="customized_icon_cont"
+                                    icons_cont.style.position="absolute"
+                                    icons_cont.style.top="0%"
+                                    icons_cont.style.paddingTop="5vh"
+                                    icons_cont.style.marginLeft="0%"
+                                    icons_cont.style.width="95%"
+                                    icons_cont.style.marginBottom="5%"
+                                    //move video img down
+                                    div_dismiss.style.marginTop="12vh"
+                                    //div_dismiss.style.marginLeft="-20vw"
+        
+                                    div_video_text.style.marginTop="3vh"
+                                    div_video_text.style.backgroundColor="rgba(226, 223, 210,0.2)" //
+                                    div_video_text.style.border="1px solid black"
+                                    div_video_text.style.padding="3%"
+        
+        
+                                }
+        
+                                //add rem btn
+                                btn_remove= document.createElement("button")
+                                btn_remove.className="btn_remove"
+                                btn_remove.style.width="50%"
+                                btn_remove.style.height="3vh" 
+                                btn_remove.style.fontSize="115%"
+                                btn_remove.style.border="black 1px solid"
+                                //add safe btn
+                                btn_safe= document.createElement("button")
+                                btn_safe.className="btn_safe"
+                                btn_safe.style.width="50%"
+                                btn_safe.style.height="3vh" 
+                                btn_safe.style.fontSize="115%"
+                                btn_safe.style.border="black 1px solid"
+        
+        
+                                //use channel url to get correlated channels
+                                
+                                
+        
+        
+                                //mark deviants
+                                try {
+                                    let ch_address= get_channel(curr_url, el) //err (whitelist is undefined)
+                                    //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
+                                    let ch_url=''
+                                    console.log("CHANNEL URL", ch_url)
+                                    //btn_remove.innerHTML = "Block"
+                                    //btn_remove.onclick=function(){add_to_blacklist(ch_address, show_unsafe)}
+        
+                                    
+                                    //handle blacklist btn
+                                    if (black_list.includes(ch_address)){ // && !white_list.includes(ch_address)
+                                        console.log(ch_address)
+                                        
+                                        //modifgy element according to input value in popup
+                                        //if visible: alter color and place icons (icons only after merging user database to main database and subsequent computation)
+                                        //elif not visible: hide elements
+                                        handle_thumb_style(el, ch_address, btn_remove, btn_safe, "add to black", password, ch_url)
+                                        //if(show_unsafe==="Show unsafe videos"){ //if it's written "Show", then it is in the hide state
+                                            //el.remove()
+                                        //}
+                                    } else if (!black_list.includes(ch_address)){
+                                        handle_thumb_style(el, ch_address,btn_remove, btn_safe, "remove from black", password, ch_url)
+                                    }
+        
+                                                             
+                                } catch (error) {
+                                    console.log("ERROR in thumbnails handling (blacklist): ", error)
+                                }
+        
+                             
+                        
+                                //mark safe
+                                try {
+                                    let ch_address= get_channel(curr_url, el) 
+                                    //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
+                                    let ch_url=""
+                                    console.log("Start marking safe")
+                                    //handle safelist btn
+                                    if (white_list.includes(ch_address) ){ //&& !black_list.includes(ch_address)  
+                                        console.log("Is in whitelist")
+                                        handle_thumb_style(el, ch_address, btn_remove, btn_safe,"add to white", password, ch_url)
+                                    }else if (!white_list.includes(ch_address)){
+                                        console.log("Is not in whitelist")
+        
+                                        handle_thumb_style(el, ch_address, btn_remove, btn_safe, "remove from white", password, ch_url)
+                                    } 
+                                } catch (error){
+                                    console.log("ERROR in thumbnails handling (whitelist): ", error)
+                                }
+        
+                                //APPENDS
+                                //append to cont
+                                icons_cont.appendChild(btn_remove)
+                                icons_cont.appendChild(btn_safe)
+                                
+                
+                                //append cont to thumb (avoid multiple cont) (only to thumb)
+                                if(el.getElementsByClassName("customized_icon_cont").length===0 && btn_remove.innerHTML!=""){
+                                    //el.insertBefore(icons_cont, el.firstChild)
+                                    el.appendChild(icons_cont)
+                                    //move channel label to the top
+                                    try{
+                                        el.querySelector(".channel_label").style.position="absolute"
+                                        el.querySelector(".channel_label").style.top=0
+                                    }catch{
+        
+                                    }
+                                    //handle el color
+                                    if(btn_safe.disabled===true){
+                                        el.style.backgroundColor="rgba(255,0,0,0.5)"
+                                    }else if(btn_remove.disabled===true){
+                                        el.style.backgroundColor="rgba(0,255,0,0.5)"
+                                    }else if(btn_remove.disabled===false && btn_safe.disabled===false){
+                                        el.style.backgroundColor="rgba(255,255,255,0)"
+                                    }
+                                    
+                                }
+        
+                                try{
+                                    //handle external scores
+                                    let ch_address= get_channel(curr_url, el)
+                                    //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
+                                    let ch_url=""
+        
+                                    console.log(ch_address, Object.keys(all_scores))
+                                    if(Object.keys(all_scores).includes(ch_address)){
+                                        try{
+                                            let thumbnail=el.querySelector("ytd-thumbnail")
+                                            if(window.location.href==="https://www.youtube.com/"){
+                                                thumbnail.style.marginTop="25%"
+                                            }else if(window.location.href.includes("https://www.youtube.com/results?search_query=")){
+                                                thumbnail.style.marginTop="15%"
+        
+                                            }
+                                        }catch{
+                                            
+                                        }
+                                       //create and append table
+                                       tableCreate(icons_cont, all_scores[ch_address])
+                                    }
+                                }catch (error){
+                                    console.log("ERROR in thumbnails handling (scores): ", error)
+                                }
+                               
+        
+                                //handle radar score
+                                if (btn_remove.innerHTML!==""){ //if on a video
+                                    let radar_toggle=document.createElement("button")
+                                    radar_toggle.innerHTML="Show other scores"
+                                    radar_toggle.style.backgroundColor=" rgba(255,255,255,1)"
+                                    radar_toggle.style.opacity=1
+                                    radar_toggle.style.width="100%"
+                                    radar_toggle.style.marginTop="1vh"
+                                    radar_toggle.className="radar_btn"
+                                    radar_toggle.style.border="1px solid black"
+                                    radar_toggle.style.fontSize="115%"
+                                    radar_toggle.style.height="3vh"
+                                    let ch_address= get_channel(curr_url, el) 
+                                    //let ch_url=el.querySelector("div#dismissible > div#details > a#avatar-link").getAttribute("href")
+                                    let ch_url=""
+                                    console.log("CH ADDRES RADAR", ch_address, all_scores[ch_address])
+                                    radar_toggle.onclick=function(){handle_radar(el, radar_toggle,
+                                                                                 all_scores[ch_address], ch_address)}
+                                    if(el.getElementsByClassName("radar_btn").length===0){
+                                        icons_cont.appendChild(radar_toggle)
+                                    }
+                                }
+                                
+                
                                 }
                             }
                             
-            
+                
+                        n_old_els = new_els.length 
+        
+                        //add hover effect to all btns
+                        document.querySelectorAll(".customized_icon_cont>button").forEach(btn=>{
+                            btn.onmouseover= function(event){
+                                btn.style.backgroundColor="rgba(75, 177, 249, 1)"
+                                btn.style.color="rgba(255,255,255,1)"
+                                btn.style.transition="all 250ms ease-in-out" //slow end
+        
                             }
-                        }
-                        
-            
-                    n_old_els = new_els.length 
-    
-                    //add hover effect to all btns
-                    document.querySelectorAll(".customized_icon_cont>button").forEach(btn=>{
-                        btn.onmouseover= function(event){
-                            btn.style.backgroundColor="rgba(75, 177, 249, 1)"
-                            btn.style.color="rgba(255,255,255,1)"
-                            btn.style.transition="all 250ms ease-in-out" //slow end
-    
-                        }
-    
-                        btn.onmouseout= function(event){
-                            btn.style.backgroundColor="rgba(255,255,255,1)"
-                            btn.style.color="rgba(0,0,0,1)"
-                            btn.style.transition="all 700ms ease-in-out" //slow start
-    
-    
+        
+                            btn.onmouseout= function(event){
+                                btn.style.backgroundColor="rgba(255,255,255,1)"
+                                btn.style.color="rgba(0,0,0,1)"
+                                btn.style.transition="all 700ms ease-in-out" //slow start
+        
+        
+                            }
+                        })
+                
+                
                         }
                     })
-            
-            
-                    }
-                })
+                }
+ 
             }
             //setting observer for stories
             
@@ -435,22 +439,24 @@ setTimeout(()=>{
 
     //scroll action
     chrome.storage.local.get().then((response)=>{
-       if(response["user"]!==null){
-            if(window.location.href.includes("/shorts/")){
-                setTimeout(()=>{
-                    console.log("story scroll")
-                    //scrolling doesnt work, use btn down-up
-                    let story_btnup= document.querySelector("div#navigation-button-up > ytd-button-renderer")
-                    let story_btndown= document.querySelector("div#navigation-button-down > ytd-button-renderer")
-        
-                    story_btndown.click()
+       if(response["user"]!==undefined){
+            if(response["user"]!==null){
+                if(window.location.href.includes("/shorts/")){
                     setTimeout(()=>{
-                        story_btnup.click()
-                    },1000)
-                    }, 500)
-        
-            }else{
-                setTimeout(()=>{window.scrollTo(0,2000);window.scrollTo(0,0)}, 1000 )
+                        console.log("story scroll")
+                        //scrolling doesnt work, use btn down-up
+                        let story_btnup= document.querySelector("div#navigation-button-up > ytd-button-renderer")
+                        let story_btndown= document.querySelector("div#navigation-button-down > ytd-button-renderer")
+            
+                        story_btndown.click()
+                        setTimeout(()=>{
+                            story_btnup.click()
+                        },1000)
+                        }, 500)
+            
+                }else{
+                    setTimeout(()=>{window.scrollTo(0,2000);window.scrollTo(0,0)}, 1000 )
+                }
             }
        } 
     })

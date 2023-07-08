@@ -153,7 +153,7 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse)=>{
         }
       })
       */
-    })
+    }).catch((err)=>{console.log("error LOGIN", err)})
 
 
     // or, if already exists, just log in
