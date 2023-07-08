@@ -8,7 +8,7 @@ Scores will be computed in a given interval (e.g., once each 2 weeks).
 :warning: This is a prototype and some bugs may be present. This is a long-term annotation project for future attempts of automatic recognition of unsafe channels thorugh user/channel activties.
 
 ## How to use it
-1. Download the "YouTube caretaker Chrome extension" folder
+1. Click on the "Code" button, download the zip and extract the "YouTube caretaker Chrome extension" folder
 1. Open Chrome and go to "chrome://extensions"
 1. Click on "+ Developer mode" (if needed)
 1. Click on "Load unpacked extension" and select the extension's folder
