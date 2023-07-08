@@ -18,6 +18,7 @@ _____
 
 ## Login
 Log in by clicking on the extension's icon and inserting a pseudo email (word@word.word).
+
 If the account does not exists, a popup will ask to create it.
 
 ![](https://github.com/FrancescoDiCursi/YouTube-caretaker-Chrome-extension/blob/main/readme_imgs/login%20extension.png?raw=true)
