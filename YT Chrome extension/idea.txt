@@ -1,0 +1,33 @@
+- Per ogni video che carica, aggiungere alla thumbnail delle icone a seconda dei risultati (sia per i titoli che per i commenti):
+	- Parolacce
+	- Sentiment (?): forse inutile perchè c'è anche eccesso di commenti positivi nei video devianti
+	- AoA
+
+- Un database centrale (i miei dati) e un database personalizzato per ogni utente dove puo' aggiungere i canali che non vuole guardare.
+
+- Le info sulle thumbnail sono relative al database centrale.
+- Le misure vengono ricalcolate quotidianamente con i nuovi dati aggiunti dagli utenti, che vengono appunto aggiunti al database centrale.
+
+- Vengono invalidati anche i canali che sono iscritti a canali devianti
+- Vengono invalidati anche i canali che appaiono come commentatori molto attivi in questi video devianti.
+- Vengono segnati, particolarmente, gli utenti che utilizzano parolacce e/o sentiment negativo e/o parole con alta AoA. I canali con video con attività di suddetti utenti vengono invalidati.
+- Venogono invalidati video con commenti disabilitati (0 commenti) e alte visualizzazioni (oppure anche solo 0 commenti)
+
+-Quando un utente aggiunge un canale alla black list ha la scelta di nasconderli oppure lasciarli in vista ma con un segno distintivo (e.g. rosso). Aggiungendolo alla propria lista, viene aggiunto anche al database centrale che (a intervalli) analizza i canali e poi ritorna i segni distintivi finali (e.g. le icone ex punto 1)
+
+
+
+#____________
+Punteggi da mostrare su ogni video:
+- se il nome fa parte del database:
+  - Volgarità
+  - N video senza commenti (?: probabilmente su una frazione di video) 
+  - rapporto n video senza commenti e n views
+  - Media AoA titoli
+  - Media AoA commenti
+  - N utenti che hanno bloccato il canale
+
+
+
+
+

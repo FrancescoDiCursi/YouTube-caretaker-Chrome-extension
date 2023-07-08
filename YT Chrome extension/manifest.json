@@ -1,0 +1,42 @@
+{
+	"manifest_version" : 3,
+	"name" : "YouTube caretaker",
+	"version" : "0.001",
+	"permissions":[
+        "webRequest",
+        "scripting",
+        "activeTab",
+        "clipboardRead",
+        "clipboardWrite",
+        "tabs",
+        "storage",
+        "notifications"
+    ],
+    "host_permissions":[
+        "<all_urls>"
+    ],
+    "background":{
+        "service_worker":"background.js",
+        "type":"module"
+    }
+    ,
+    "action" : {
+        "default_icon":"yt_img.png",
+        "default_popup":"popup.html"
+    },
+    "content_scripts":[
+        {
+            "matches": ["https://www.youtube.com/*"],
+            "js": ["content.js","d3-v3-min.js"],
+            "css": ["css/fontawesome.min.css"], 
+            "run_at": "document_end"
+        }
+    ]
+    ,
+    "icons":{
+        "16":"yt_img.png",
+        "48":"yt_img.png",
+        "128":"yt_img.png"
+    },
+    "description": "A Chrome extension that allows the user to attend a collective annotation project on NSFL contents, see risk scores and block undesired channels. (BETA) "
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="d3-v7-min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+<div id="meta_cont">
+    <div id="login_cont">
+        <label>
+            E-mail
+            <input id="email_inp" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
+        </label>
+        <label>
+            Pass
+            <input id="pass_inp" type="password" minlength="6"/>
+        </label>
+    </div>
+    <p id="login_err"></p>
+    <button id="login_btn">Log in</button>
+
+
+    <div id="main_cont">
+        <div id="logged_user_cont">
+        <div id="logged_user">Connected as: </div><div id="user_email"></div>
+        </div>
+        <hr/>
+        <div id="controls">
+            <h3 id="ext_handlers_title">Extension's handlers</h3>
+
+            <div id="live_reload_lists_cont">
+                <span class="bullet">&#8227</span> Live upload of black and white lists counter (experimental):
+                <div class="inp_cont">
+                    <input type="checkbox" id="live_reload_lists_inp_yes">Yes </input>
+                    <input type="checkbox" id="live_reload_lists_inp_no" checked>No </input>
+                </div>
+
+
+            </div>
+            <hr class="inp_separator"/><br/>
+            <div id="hide_video_suggestion_cont">
+                <span class="bullet">&#8227</span> Hide video suggestions and autoplay:
+                <div class="inp_cont">
+                    <input type="checkbox" id="hide_video_suggestion_inp_yes">Yes </input>
+                    <input type="checkbox" id="hide_video_suggestion_inp_no" checked>No </input>
+                </div>
+
+
+            </div>
+
+            
+        </div>
+    
+        <div id="blacklist">
+            
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="popup.js"></script>
+<style type="text/css">
+    #meta_cont{
+        width: 350px;
+    }
+    #black_list_inp_cont, #login_cont, #logged_user_cont{
+        display: flex;
+        flex-direction: row;
+    }
+    #login_err{
+        color: red;
+    }
+    #login_btn{
+        width: 100%;
+        background-color: rgba(0, 0, 255, 0.5);
+        margin-bottom: 1rem;
+    }
+    label{
+        font-size: 12px;
+        font-weight:bold;
+        flex: 1;
+    }
+
+    #main_cont{
+        display: none;
+    }
+
+    #customized_icon_cont{
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+    }
+
+    #btn_remove{
+        width: 10px;
+        height: 10px;
+    }
+
+    #show_unsafe_btn{
+        width: 100%;
+        margin-top: 1%;
+    }
+    /* remove controls display:none to show the checkbox for live reload*/
+    #controls{
+        border: 1px solid black;
+        padding: 3%;
+    }
+
+    #logged_user{
+        margin-right: 2%;
+        font-weight: bold;
+    }
+
+    #user_email{
+        font-weight: bolder;
+        color:red;
+        text-decoration: underline red;
+    }
+
+
+
+    .inp_cont{
+        position: relative;
+        margin-left: 2%;
+    }
+
+    .inp_separator{
+        width:50%;
+        position: relative;
+        float: left;
+    }
+
+    #ext_handlers_title{
+        text-align: center;
+        margin-top: -2%;
+    }
+
+    .bullet{
+        font-size: 15px;
+    }
+   
+    
+</style>
+</html>
+
+
