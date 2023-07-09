@@ -59,6 +59,8 @@ function signup_prompt(msg, yes_btn_text, no_btn_text, auth, data, user_blacklis
         reload_active_tab()
         send_scores()
         handle_storage({"user":auth.currentUser.email.trim(), "black_list":user_blacklist, "white_list":user_whitelist, "password": data.pass.trim(), "live_reload_lists":false, "hide_video_suggestion":false});
+        //init lists
+        db.collection("user").set({white_list:{}, black_list:{}})
         //setTimeout(()=>{send_scores()},4000)
         
 
