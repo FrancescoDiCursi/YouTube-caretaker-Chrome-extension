@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function(){
     let live_reload_lists_no= document.getElementById("live_reload_lists_inp_no")
     let hide_video_suggestion_yes= document.getElementById("hide_video_suggestion_inp_yes")
     let hide_video_suggestion_no= document.getElementById("hide_video_suggestion_inp_no")
+
+    let handlers_reload_info= document.getElementById("handlers_reload_info")
     //preserve popup input states on close/open 
     chrome.storage.local.get().then((strg)=>{
         //live list counter
@@ -85,9 +87,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     log_btn.innerHTML = "Log out"
                     logged_user.innerHTML= "Connected as: "
                     user_email_.innerHTML= response.email
-
-
-
+                    handlers_reload_info.style.display="block"
                                        
                 }else if(log_btn.innerHTML ==="Log out"){
                     main_cont.style["display"]="none"
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     log_btn.innerHTML = "Log in"
                     logged_user.innerHTML= ""
                     user_email_.innerHTML= ""
-
+                    handlers_reload_info.style.display="none"
 
                 }
             } else{
