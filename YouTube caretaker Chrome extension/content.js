@@ -1012,6 +1012,12 @@ function tableCreate(parent,data) {
     }catch{
 
     }
+    //skip if data===undefined (if auto update of list counter is off, even modifing list results in data===undefined)
+    if (data===undefined || Object.values(data).reduce((a,b)=>a+b, 0)===0 ){ //if undefined or sum of values is 0 
+        console.log("No data in table")
+        return
+    }
+
     let tbl = document.createElement('table');
     tbl.style.width = '100px';
     tbl.style.border = '1px solid black';
@@ -1187,9 +1193,8 @@ function tableCreate(parent,data) {
         }
     }
    
-    
     parent.insertBefore(table, parent.querySelector(".radar_btn"));
-    console.log("TABLE ADDED")
+    console.log("TABLE ADDED", data)
   }
 
 //setTimeout(()=>{window.scrollTo(0,1000);window.scrollTo(0,0)}, 4000 )
